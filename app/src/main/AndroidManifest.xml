@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zekihan.novelreader">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="false"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activities.main.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.chapterreader.ChapterReaderActivity" />
+        <activity android:name=".activities.chapterreader.OfflineChapterReaderActivity" />
+        <activity
+            android:name=".activities.chapters.ChaptersActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".activities.chapters.OfflineChaptersActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".activities.description.NovelDescriptionActivity" />
+        <activity android:name=".activities.description.OfflineNovelDescriptionActivity" />
+        <activity android:name=".activities.DownloadChaptersActivity" />
+        <activity android:name=".activities.sign.SignInActivity" />
+        <activity android:name=".activities.sign.SignUpActivity" />
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-7155161647129677~5206319402" />
+
+        <activity android:name=".activities.SearchActivity" />
+    </application>
+
+</manifest>
