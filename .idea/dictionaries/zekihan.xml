@@ -1,29 +1,3 @@
 <component name="ProjectDictionaryState">
-  <dictionary name="zekihan">
-    <words>
-      <w>activ</w>
-      <w>ahlogin</w>
-      <w>ahsignup</w>
-      <w>chapterreader</w>
-      <w>ecchi</w>
-      <w>favs</w>
-      <w>infos</w>
-      <w>jarr</w>
-      <w>josei</w>
-      <w>mecha</w>
-      <w>novelreader</w>
-      <w>punto</w>
-      <w>scifi</w>
-      <w>seinen</w>
-      <w>shotacon</w>
-      <w>shoujo</w>
-      <w>shounen</w>
-      <w>signup</w>
-      <w>singin</w>
-      <w>wuxia</w>
-      <w>xianxia</w>
-      <w>xuanhuan</w>
-      <w>yaoi</w>
-    </words>
-  </dictionary>
+  <dictionary name="zekihan" />
 </component>

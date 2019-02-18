@@ -42,7 +42,7 @@ public class ImageSaver {
         return this;
     }
 
-    void save(@NonNull Bitmap bitmapImage) {
+    public void save(@NonNull Bitmap bitmapImage) {
         FileOutputStream fileOutputStream = null;
         try {
             fileOutputStream = new FileOutputStream(createFile());

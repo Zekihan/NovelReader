@@ -97,6 +97,8 @@ public class NovelJson {
                 }
             }
         } catch (JSONException e) {
+            Log.e("ERr",e.getMessage());
+            Log.e("ERr",e.getCause()+"");
             e.printStackTrace();
         }
         return novels;
