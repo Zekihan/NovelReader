@@ -22,6 +22,7 @@ public class Novel implements Parcelable {
     public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_GENRES = "genres";
     public static final String COLUMN_TAGS = "tags";
+    public static final String COLUMN_PIC = "tags";
 
     private int idx;
     @Nullable
@@ -53,6 +54,7 @@ public class Novel implements Parcelable {
                     + COLUMN_STATUS + " TEXT,"
                     + COLUMN_GENRES + " TEXT,"
                     + COLUMN_TAGS + " TEXT "
+                    + COLUMN_TAGS + " TEXT"
                     + ")";
 
     public static final Creator<Novel> CREATOR = new Creator<Novel>() {

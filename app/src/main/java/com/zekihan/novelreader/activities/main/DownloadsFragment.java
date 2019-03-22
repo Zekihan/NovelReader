@@ -17,8 +17,8 @@ import com.zekihan.datatype.DownloadLog;
 import com.zekihan.datatype.Novel;
 import com.zekihan.novelreader.R;
 import com.zekihan.novelreader.activities.description.OfflineNovelDescriptionActivity;
+import com.zekihan.utilities.DatabaseHelper.NovelDatabaseHelper;
 import com.zekihan.utilities.json.ChapterFileIO;
-import com.zekihan.utilities.json.NovelJson;
 
 import java.util.List;
 
@@ -45,7 +45,7 @@ public class DownloadsFragment extends Fragment {
         final LinearLayout ll2 = rootView.findViewById(R.id.ll6);
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        List<Novel> novels = NovelJson.readNovelFile(mContext);
+        List<Novel> novels = new NovelDatabaseHelper(mContext).getAllNovels();
         List<DownloadLog> downloadLogs = ChapterFileIO.readDownloadLogFile(mContext);
         for (DownloadLog downloadLog : downloadLogs) {
             String novelId = downloadLog.getNovelId();

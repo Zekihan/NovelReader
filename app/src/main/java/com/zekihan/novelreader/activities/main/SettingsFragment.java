@@ -3,7 +3,9 @@ package com.zekihan.novelreader.activities.main;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -16,7 +18,6 @@ import android.widget.Toast;
 
 import com.zekihan.datatype.Setting;
 import com.zekihan.novelreader.R;
-import com.zekihan.utilities.FileInOut;
 
 import java.util.Objects;
 
@@ -35,7 +36,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_settings, container, false);
 
         mContext = rootView.getContext();
 
@@ -88,8 +89,11 @@ public class SettingsFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FileInOut fio = new FileInOut(mContext);
-                fio.writeFile("settings", "settings", "theme," + theme[0] + System.lineSeparator() + "punto," + (punto[0]));
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("theme", theme[0]);
+                editor.putInt("punt", punto[0]);
+                editor.apply();
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
                 builder.setTitle("Save Changes");
                 builder.setMessage("Some of the changes needs the app to restart");

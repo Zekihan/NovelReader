@@ -22,11 +22,11 @@ public class FileInOut {
         this.mContext = mContext;
     }
 
-    void setFileName(String fileName) {
+    public void setFileName(String fileName) {
         this.fileName = fileName;
     }
 
-    void setDirectoryName(String directoryName) {
+    public void setDirectoryName(String directoryName) {
         this.directoryName = directoryName;
     }
 
@@ -77,7 +77,7 @@ public class FileInOut {
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @NonNull
-    File createFile() {
+    public File createFile() {
         File directory;
         File file = mContext.getFilesDir();
         file.mkdir();

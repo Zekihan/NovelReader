@@ -16,11 +16,12 @@ import com.zekihan.datatype.ImageItem;
 import com.zekihan.datatype.Novel;
 import com.zekihan.novelreader.R;
 import com.zekihan.novelreader.activities.description.NovelDescriptionActivity;
+import com.zekihan.utilities.DatabaseHelper.NovelDatabaseHelper;
 import com.zekihan.utilities.GridViewAdapter;
 import com.zekihan.utilities.ImageSaver;
-import com.zekihan.utilities.json.NovelJson;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NovelsFragment extends Fragment {
 
@@ -38,7 +39,7 @@ public class NovelsFragment extends Fragment {
         GridView gd = rootView.findViewById(R.id.novels);
         gd.setNumColumns(3);
 
-        ArrayList<Novel> novels = NovelJson.readNovelFile(mContext);
+        List<Novel> novels = new NovelDatabaseHelper(getContext()).getAllNovels();
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
         ImageSaver is = new ImageSaver(mContext);
         for (final Novel novel : novels) {

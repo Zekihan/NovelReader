@@ -12,11 +12,12 @@ import android.widget.TextView;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.zekihan.datatype.Chapter;
+import com.zekihan.datatype.LastReadInfo;
 import com.zekihan.datatype.Novel;
 import com.zekihan.datatype.Setting;
 import com.zekihan.novelreader.R;
+import com.zekihan.utilities.DatabaseHelper.LastReadDatabaseHelper;
 import com.zekihan.utilities.json.ChapterFileIO;
-import com.zekihan.utilities.json.LastReadInfoJson;
 
 public class OfflineChapterReaderActivity extends AppCompatActivity {
 
@@ -107,7 +108,7 @@ public class OfflineChapterReaderActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        LastReadInfoJson.LastReadSave(mContext, novelId, chapterNumber, scrollViewChapter.getScrollY());
+        new LastReadDatabaseHelper(mContext).updateLastReadInfo(new LastReadInfo(novelId, chapterNumber, scrollViewChapter.getScrollY()));
         super.onBackPressed();
     }
 }

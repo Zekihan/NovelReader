@@ -13,7 +13,6 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.zekihan.datatype.Setting;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,15 +21,6 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Utils {
-    public static Setting sett(Context context) {
-        FileInOut fio = new FileInOut(context);
-        if (fio.fileRead("settings", "settings") == null) {
-            fio.writeFile("settings", "settings", "theme,white" + System.lineSeparator() + "punto,18");
-        }
-        String theme = fio.fileRead("settings", "settings").split("\n")[0].substring(6);
-        int punto = Integer.parseInt(fio.fileRead("settings", "settings").split("\n")[1].substring(6));
-        return new Setting(theme, punto);
-    }
 
     public static void uploadStorage(@NonNull StorageReference storageReference, final Context context, String userID, String path, String fileName) {
 

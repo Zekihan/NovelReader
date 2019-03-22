@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import com.zekihan.datatype.Genre;
 import com.zekihan.datatype.Novel;
 import com.zekihan.datatype.Status;
-import com.zekihan.utilities.json.NovelJson;
+import com.zekihan.utilities.DatabaseHelper.NovelDatabaseHelper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,7 +65,7 @@ public class Download {
                             Log.e("Downloads", "err : " + id + " " + value);
                             Novel novel = new Novel(id, name, description, value, language, author, status, genres, tags);
                             novels.add(novel);
-                            NovelJson.writeMultipleNovelFile(mContext, novels);
+                            new NovelDatabaseHelper(mContext).insertNovel(novel);
                         }
                     });
                     StorageReference storageReference = mStorage.getReference().child("novels").child("pics").child(id + ".jpg");

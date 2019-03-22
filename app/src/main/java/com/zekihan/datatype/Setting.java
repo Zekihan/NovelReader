@@ -1,41 +1,24 @@
 package com.zekihan.datatype;
 
 import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
-import com.zekihan.utilities.Utils;
+public class Setting {
 
-public class Setting implements Parcelable {
-    public static final Creator<Setting> CREATOR = new Creator<Setting>() {
-        @Override
-        public Setting createFromParcel(@NonNull Parcel in) {
-            return new Setting(in);
-        }
+    private String theme;
+    private int punto;
 
-        @Override
-        public Setting[] newArray(int size) {
-            return new Setting[size];
-        }
-    };
-    @Nullable
-    private final String theme;
-    private final int punto;
 
     public Setting(String theme, int punto) {
         this.theme = theme;
         this.punto = punto;
     }
 
-    private Setting(Parcel in) {
-        theme = in.readString();
-        punto = in.readInt();
-    }
-
     public static Setting getSettingFromFile(Context context) {
-        return Utils.sett(context);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return new Setting(prefs.getString("theme","dark"),prefs.getInt("punt",18));
     }
 
     @Nullable
@@ -47,14 +30,4 @@ public class Setting implements Parcelable {
         return punto;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(theme);
-        parcel.writeInt(punto);
-    }
 }

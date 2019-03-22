@@ -22,9 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.zekihan.datatype.LastReadInfo;
 import com.zekihan.datatype.Setting;
 import com.zekihan.novelreader.R;
-import com.zekihan.utilities.json.LastReadInfoJson;
+import com.zekihan.utilities.DatabaseHelper.LastReadDatabaseHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ChapterReaderActivity extends AppCompatActivity {
 
@@ -157,15 +157,17 @@ public class ChapterReaderActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        LastReadInfoJson.LastReadSave(mContext, novelId, chapterNumber, scrollViewChapter.getScrollY());
+        if(new LastReadDatabaseHelper(mContext).getLastReadInfo(novelId) != null)
+            new LastReadDatabaseHelper(mContext).updateLastReadInfo(new LastReadInfo(novelId, chapterNumber, scrollViewChapter.getScrollY()));
+        else new LastReadDatabaseHelper(mContext).insertLastReadInfo(new LastReadInfo(novelId, chapterNumber, scrollViewChapter.getScrollY()));
         super.onBackPressed();
     }
 
     private void getScrollToPosition(Context context, String novelId) {
-        ArrayList<LastReadInfo> lastReadInfos = LastReadInfoJson.readLastReadFile(context);
+        List<LastReadInfo> lastReadInfos = new LastReadDatabaseHelper(context).getAllLastReadInfos();
         if (lastReadInfos.size() > 0) {
             for (LastReadInfo lri : lastReadInfos) {
-                if (lri.getNovelId().equals(novelId)) {
+                if ((lri.getNovelId().equals(novelId))&&(lri.getChapterNum() == chapterNumber)) {
                     Handler h = new Handler();
 
                     h.postDelayed(new Runnable() {

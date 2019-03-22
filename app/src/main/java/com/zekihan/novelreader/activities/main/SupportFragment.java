@@ -1,6 +1,9 @@
 package com.zekihan.novelreader.activities.main;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -37,6 +40,28 @@ public class SupportFragment extends Fragment {
 
         final Button button = rootView.findViewById(R.id.button);
         button.setText(R.string.watch);
+
+        final Button button2 = rootView.findViewById(R.id.button2);
+        button2.setText(R.string.help_me);
+
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                Uri data = Uri.parse("mailto:azmanzekihan@gmail.com?subject=" + "Novel Reader Support" + "&body=" + System.lineSeparator()
+                        + System.lineSeparator() + System.lineSeparator() + System.lineSeparator() + System.lineSeparator()
+                        + "Don't touch the lines below,they are required for us to make faster and more accurate fixes" + System.lineSeparator()
+                        + "System Os Version :" + System.getProperty("os.version") + System.lineSeparator()
+                        + "SDK :" + Build.VERSION.SDK_INT + System.lineSeparator()
+                        + "Device :" + android.os.Build.DEVICE + System.lineSeparator()
+                        + "Model :" + android.os.Build.MODEL + System.lineSeparator()
+                        + "BRAND :" + Build.BRAND + System.lineSeparator()
+                        + "TIME :" + Build.TIME + System.lineSeparator()
+                );
+                intent.setData(data);
+                startActivity(intent);
+            }
+        });
 
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(mContext);
         mRewardedVideoAd.loadAd(getResources().getString(R.string.rewarded_video_ad_unit_id), new AdRequest.Builder().build());

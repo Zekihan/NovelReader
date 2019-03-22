@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,9 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.zekihan.datatype.Novel;
 import com.zekihan.novelreader.R;
 import com.zekihan.novelreader.activities.description.NovelDescriptionActivity;
-import com.zekihan.utilities.json.NovelJson;
+import com.zekihan.utilities.DatabaseHelper.FavoritesDatabaseHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
@@ -46,7 +47,7 @@ public class FavoritesFragment extends Fragment {
         final LinearLayout ll2 = rootView.findViewById(R.id.ll3);
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ArrayList<Novel> favorites = NovelJson.readFavoritesFile(mContext);
+        List<Novel> favorites = new FavoritesDatabaseHelper(mContext).getAllNovels();
         for (final Novel novel : favorites) {
             final Button b = new Button(mContext);
             b.setText(novel.getName());
@@ -56,6 +57,7 @@ public class FavoritesFragment extends Fragment {
                 public void onClick(View view) {
                     Intent novelDescription = new Intent(mContext, NovelDescriptionActivity.class);
                     novelDescription.putExtra("Novel", novel);
+                    Log.e("ErR",novel.getDescription()+"");
                     startActivity(novelDescription);
                 }
             });

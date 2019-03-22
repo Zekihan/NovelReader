@@ -18,9 +18,9 @@ import com.zekihan.datatype.Setting;
 import com.zekihan.novelreader.R;
 import com.zekihan.novelreader.activities.DownloadChaptersActivity;
 import com.zekihan.novelreader.activities.chapters.ChaptersActivity;
-import com.zekihan.utilities.json.NovelJson;
+import com.zekihan.utilities.DatabaseHelper.FavoritesDatabaseHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class NovelDescriptionActivity extends AppCompatActivity {
     private static final String TAG = "NovelDescriptionActiv..";
@@ -76,8 +76,8 @@ public class NovelDescriptionActivity extends AppCompatActivity {
 
         final ImageButton fav = findViewById(R.id.favorites);
         final boolean[] favState = {false};
-        final ArrayList<Novel> favs = NovelJson.readFavoritesFile(mContext);
-        Log.e(TAG,favs+"");
+        final FavoritesDatabaseHelper db = new FavoritesDatabaseHelper(mContext);
+        final List<Novel> favs = db.getAllNovels();
         final int[] i = {0};
         for (Novel novel1 : favs) {
             Log.e(TAG,novel.toString());
@@ -97,18 +97,19 @@ public class NovelDescriptionActivity extends AppCompatActivity {
                 if (favState[0]) {
                     fav.setImageDrawable(getDrawable(FAV_OFF));
                     favState[0] = false;
-                    favs.remove(i[0]);
-                    Log.e(TAG," of "+novel.toString());
-                    NovelJson.writeFavoritesFile(mContext, favs);
+                    db.deleteNote(novel);
                 } else {
                     fav.setImageDrawable(getDrawable(FAV_ON));
                     favState[0] = true;
-                    favs.add(novel);
-                    Log.e(TAG," on "+favs+"");
-                    NovelJson.writeFavoritesFile(mContext, favs);
+                    db.insertNovel(novel);
+
                 }
             }
         });
 
+    }
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -1,26 +1,29 @@
 package com.zekihan.datatype;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+public class LastReadInfo {
 
-public class LastReadInfo implements Parcelable {
-    public static final Creator<LastReadInfo> CREATOR = new Creator<LastReadInfo>() {
-        @Override
-        public LastReadInfo createFromParcel(@NonNull Parcel in) {
-            return new LastReadInfo(in);
-        }
-
-        @Override
-        public LastReadInfo[] newArray(int size) {
-            return new LastReadInfo[size];
-        }
-    };
-    @Nullable
-    private final String novelId;
+    private String novelId;
     private int chapterNum;
     private int scrollPosition;
+    private int id;
+
+    public static final String TABLE_NAME = "last_read";
+
+    public static final String COLUMN_ID = "id";
+    public static final String COLUMN_NOVELID = "novelId";
+    public static final String COLUMN_CHAPTERNUM = "chapterNum";
+    public static final String COLUMN_SCROLLPOSITION = "scrollPosition";
+
+    public static final String CREATE_TABLE =
+            "CREATE TABLE " + TABLE_NAME + "("
+                    + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    + COLUMN_NOVELID + " TEXT,"
+                    + COLUMN_CHAPTERNUM + " INTEGER,"
+                    + COLUMN_SCROLLPOSITION + " INTEGER "
+                    + ")";
+
+    public LastReadInfo() {
+    }
 
     public LastReadInfo(String novelId, int chapterNum, int scrollPosition) {
         this.novelId = novelId;
@@ -28,13 +31,6 @@ public class LastReadInfo implements Parcelable {
         this.scrollPosition = scrollPosition;
     }
 
-    private LastReadInfo(Parcel in) {
-        novelId = in.readString();
-        chapterNum = in.readInt();
-        scrollPosition = in.readInt();
-    }
-
-    @Nullable
     public String getNovelId() {
         return novelId;
     }
@@ -55,8 +51,16 @@ public class LastReadInfo implements Parcelable {
         this.scrollPosition = scrollPosition;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
-    public boolean equals(@Nullable Object obj) {
+    public boolean equals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -68,15 +72,4 @@ public class LastReadInfo implements Parcelable {
         }
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeString(novelId);
-        parcel.writeInt(chapterNum);
-        parcel.writeInt(scrollPosition);
-    }
 }

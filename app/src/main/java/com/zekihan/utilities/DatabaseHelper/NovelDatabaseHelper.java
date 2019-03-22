@@ -1,4 +1,4 @@
-package com.zekihan.utilities;
+package com.zekihan.utilities.DatabaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,14 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.zekihan.datatype.Genre;
 import com.zekihan.datatype.Novel;
 import com.zekihan.datatype.Status;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+import java.util.ArrayList;
+import java.util.List;
+
+public class NovelDatabaseHelper extends SQLiteOpenHelper implements DatabaseHelper{
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -22,7 +21,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "novels_db";
 
 
-    public DatabaseHelper(Context context) {
+    public NovelDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -56,9 +55,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Novel.COLUMN_CHAPTERCOUNT, novel.getChapterCount());
         values.put(Novel.COLUMN_AUTHOR, novel.getAuthor());
         values.put(Novel.COLUMN_LANGUAGE, novel.getLanguage());
-        values.put(Novel.COLUMN_STATUS, "status");
-        values.put(Novel.COLUMN_GENRES, "genres");
-        values.put(Novel.COLUMN_TAGS, "tags");
+        values.put(Novel.COLUMN_STATUS, novel.getStatus().toString());
+        values.put(Novel.COLUMN_GENRES, DatabaseUtils.genreListToString(novel.getGenres()));
+        if (novel.getTags() != null) {
+            values.put(Novel.COLUMN_TAGS, DatabaseUtils.tagListToString(novel.getTags()));
+        }else values.put(Novel.COLUMN_TAGS, "{}");
 
 
         // insert row
@@ -86,20 +87,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Novel novel = new Novel(
                 cursor.getString(cursor.getColumnIndex(Novel.COLUMN_ID)),
                 cursor.getString(cursor.getColumnIndex(Novel.COLUMN_NAME)),
-                cursor.getString(cursor.getColumnIndex(Novel.COLUMN_AUTHOR)),
+                cursor.getString(cursor.getColumnIndex(Novel.COLUMN_DESCRIPTION)),
                 cursor.getInt(cursor.getColumnIndex(Novel.COLUMN_CHAPTERCOUNT)),
                 cursor.getString(cursor.getColumnIndex(Novel.COLUMN_LANGUAGE)),
-                cursor.getString(cursor.getColumnIndex(Novel.COLUMN_DESCRIPTION)),
-                Status.Completed,
-                new ArrayList<Genre>(),
-                new ArrayList<String>());
+                cursor.getString(cursor.getColumnIndex(Novel.COLUMN_AUTHOR)),
+                Status.valueOf(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_STATUS))),
+                DatabaseUtils.stringToGenreList(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_GENRES))),
+                DatabaseUtils.stringToTagList(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_TAGS))));
 
         // close the db connection
         cursor.close();
 
         return novel;
     }
-    public List<Novel> getAllNotes() {
+    public List<Novel> getAllNovels() {
         List<Novel> novels = new ArrayList<>();
 
         // Select All Query
@@ -115,18 +116,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Novel novel = new Novel(
                         cursor.getString(cursor.getColumnIndex(Novel.COLUMN_ID)),
                         cursor.getString(cursor.getColumnIndex(Novel.COLUMN_NAME)),
-                        cursor.getString(cursor.getColumnIndex(Novel.COLUMN_AUTHOR)),
+                        cursor.getString(cursor.getColumnIndex(Novel.COLUMN_DESCRIPTION)),
                         cursor.getInt(cursor.getColumnIndex(Novel.COLUMN_CHAPTERCOUNT)),
                         cursor.getString(cursor.getColumnIndex(Novel.COLUMN_LANGUAGE)),
-                        cursor.getString(cursor.getColumnIndex(Novel.COLUMN_DESCRIPTION)),
-                        Status.Completed,
-                        new ArrayList<Genre>(),
-                        new ArrayList<String>());
+                        cursor.getString(cursor.getColumnIndex(Novel.COLUMN_AUTHOR)),
+                        Status.valueOf(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_STATUS))),
+                        DatabaseUtils.stringToGenreList(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_GENRES))),
+                        DatabaseUtils.stringToTagList(cursor.getString(cursor.getColumnIndex(Novel.COLUMN_TAGS))));
                 novels.add(novel);
             } while (cursor.moveToNext());
         }
 
         // close db connection
+        cursor.close();
         db.close();
 
         // return notes list
@@ -154,9 +156,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(Novel.COLUMN_CHAPTERCOUNT, novel.getChapterCount());
         values.put(Novel.COLUMN_AUTHOR, novel.getAuthor());
         values.put(Novel.COLUMN_LANGUAGE, novel.getLanguage());
-        values.put(Novel.COLUMN_STATUS, "status");
-        values.put(Novel.COLUMN_GENRES, "genres");
-        values.put(Novel.COLUMN_TAGS, "tags");
+        values.put(Novel.COLUMN_STATUS, novel.getStatus().toString());
+        values.put(Novel.COLUMN_GENRES, DatabaseUtils.genreListToString(novel.getGenres()));
+        if (novel.getTags() != null) {
+            values.put(Novel.COLUMN_TAGS, DatabaseUtils.tagListToString(novel.getTags()));
+        }else values.put(Novel.COLUMN_TAGS, "{}");
 
         // updating row
         return db.update(Novel.TABLE_NAME, values, Novel.COLUMN_IDX + " = ?",
@@ -164,8 +168,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public void deleteNote(Novel novel) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(Novel.TABLE_NAME, Novel.COLUMN_IDX + " = ?",
-                new String[]{String.valueOf(novel.getIdx())});
+        db.delete(Novel.TABLE_NAME, Novel.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(novel.getId())});
         db.close();
     }
 }

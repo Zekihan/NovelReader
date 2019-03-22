@@ -20,10 +20,10 @@ import com.zekihan.datatype.Novel;
 import com.zekihan.novelreader.R;
 import com.zekihan.novelreader.activities.chapterreader.ChapterReaderActivity;
 import com.zekihan.novelreader.activities.description.NovelDescriptionActivity;
-import com.zekihan.utilities.json.LastReadInfoJson;
-import com.zekihan.utilities.json.NovelJson;
+import com.zekihan.utilities.DatabaseHelper.LastReadDatabaseHelper;
+import com.zekihan.utilities.DatabaseHelper.NovelDatabaseHelper;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class LastReadFragment extends Fragment {
 
@@ -51,10 +51,11 @@ public class LastReadFragment extends Fragment {
         final LinearLayout ll4 = rootView.findViewById(R.id.ll14);
         final LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
-        ArrayList<LastReadInfo> lastReadInfos = LastReadInfoJson.LastReadRead(mContext);
+        List<LastReadInfo> lastReadInfos = new LastReadDatabaseHelper(mContext).getAllLastReadInfos();
         for (LastReadInfo lastReadInfo : lastReadInfos) {
             final String novelId = lastReadInfo.getNovelId();
             final int chapterNumber = lastReadInfo.getChapterNum();
+            final int scrollPosition = lastReadInfo.getScrollPosition();
             TextView tt = new TextView(mContext);
             tt.setText(novelId);
             tt.setTextSize(24);
@@ -63,12 +64,13 @@ public class LastReadFragment extends Fragment {
             tt.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ArrayList<Novel> novels = NovelJson.readNovelFile(mContext);
+                    List<Novel> novels = new NovelDatabaseHelper(mContext).getAllNovels();
                     for (final Novel novel : novels) {
                         if (novel.getId().equals(novelId)) {
                             Intent novelDescription = new Intent(mContext, NovelDescriptionActivity.class);
                             novelDescription.putExtra("Novel", novel);
                             startActivity(novelDescription);
+                            break;
                         }
                     }
                 }
@@ -89,7 +91,7 @@ public class LastReadFragment extends Fragment {
                 }
             });
             int lastChapter = 0;
-            ArrayList<Novel> novels = NovelJson.readNovelFile(mContext);
+            List<Novel> novels = new NovelDatabaseHelper(mContext).getAllNovels();
             for (Novel novel : novels) {
                 if (novel.getId().equals(novelId)) {
                     lastChapter = novel.getChapterCount();
@@ -119,9 +121,7 @@ public class LastReadFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     Log.e(TAG, "deleted");
-                    ArrayList<LastReadInfo> lastReadInfos = LastReadInfoJson.readLastReadFile(mContext);
-                    lastReadInfos.remove(new LastReadInfo(novelId, chapterNumber, 0));
-                    LastReadInfoJson.writeLastReadFile(mContext, lastReadInfos);
+                    new LastReadDatabaseHelper(mContext).deleteLastReadInfo((new LastReadInfo(novelId, chapterNumber, scrollPosition)));
                     Toast.makeText(mContext, "Deleted", Toast.LENGTH_SHORT).show();
                 }
             });

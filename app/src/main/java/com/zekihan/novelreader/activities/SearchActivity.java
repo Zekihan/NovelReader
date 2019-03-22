@@ -9,7 +9,7 @@ import android.util.Log;
 import com.zekihan.datatype.Genre;
 import com.zekihan.datatype.Novel;
 import com.zekihan.novelreader.R;
-import com.zekihan.utilities.json.NovelJson;
+import com.zekihan.utilities.DatabaseHelper.NovelDatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         Context mContext = getApplicationContext();
-        List<Novel> novels = NovelJson.readNovelFile(mContext);
+        List<Novel> novels = new NovelDatabaseHelper(mContext).getAllNovels();
         Novel novel = novels.get(0);
         List<Genre> genres = novel.getGenres();
         List<Genre> genre1 = new ArrayList<>();
