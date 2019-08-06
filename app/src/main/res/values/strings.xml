@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">Novel Reader</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="chapter">Chapter</string>
+    <string name="go_to_chapters">Go To Chapters</string>
+    <string name="go_to">Go To</string>
+    <string name="go">Go</string>
+    <string name="download">Download</string>
+    <string name="start">Start</string>
+    <string name="finish">Finish</string>
+    <string name="update">Update</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="this_is_sample_text_to_see_how_big_the_size_of_writings">This is sample text to see how big the size of writings.</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="no_chapter">No chapter here for now!</string>
+    <string name="novels">Novels</string>
+
+
+    <string name="banner_ad_unit_id">ca-app-pub-7155161647129677/3885498879</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-7155161647129677/1282675820</string>
+    <string name="rewarded_video_ad_unit_id">ca-app-pub-7155161647129677/3399247867</string>
+
+
+    <string name="sign_out">Sign Out</string>
+    <string name="email_id">email id</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="failed">Authentication failed</string>
+    <string name="image">image</string>
+    <string name="create_a_new_account">Create a new Account!</string>
+    <string name="watch">Watch</string>
+    <string name="checkbox">CheckBox</string>
+    <string name="already_a_member_login">Already a member? Login</string>
+    <string name="item_name">Item Name</string>
+    <string name="star_off">star off</string>
+    <string name="novel_pic">novel pic</string>
+    <string name="email">Email</string>
+    <string name="create_account">Create Account</string>
+    <string name="novel">Novel</string>
+    <string name="latest_read">Latest Read</string>
+    <string name="latest_release">Latest Release</string>
+    <string name="profile">Profile</string>
+    <string name="e_mail">E-mail :</string>
+    <string name="cloud_profile_backup">Cloud Profile Backup</string>
+    <string name="button">Button</string>
+    <string name="if_you_want_to_help_me_watch_a_short_video">If you want to help me watch a short video.</string>
+    <string name="if_you_want_help_clicl_this_one">If you want help click this one.</string>
+    <string name="help_me">Help Me</string>
+    <string name="loading_the_nessesary_datas_it_should_take_up_to_one_minute">Loading The Nessesary Datas \n( it should take up to one minute)</string>
+
+
+    <string-array name="navigation_drawer_items_array">
+        <item>Profile</item>
+        <item>Favorites</item>
+        <item>Downloads</item>
+        <item>LastRead</item>
+        <item>Support</item>
+        <item>Settings</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+
+</resources>
