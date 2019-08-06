@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "299807716867-97344t0vgr9mk6raoq6dmqsopboc671n.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zekihan.novelreader",
-            "certificate_hash": "db37710788ad9f95b752543669c6ca29e4d25217"
-          }
-        },
-        {
           "client_id": "299807716867-n8pcjbampvnk73fgehp90fffh17et65o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -41,16 +33,22 @@
         }
       ],
       "services": {
+        "analytics_service": {
+          "status": 1
+        },
         "appinvite_service": {
+          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "299807716867-5lhhrdnq0menn9bqcdfthrh6o07ckdp6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
         }
-      },
-      "admob_app_id": "ca-app-pub-7155161647129677~5206319402"
+      }
     }
   ],
   "configuration_version": "1"

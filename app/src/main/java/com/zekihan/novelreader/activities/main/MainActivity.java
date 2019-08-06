@@ -119,9 +119,6 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
             setTitle("Novels");
-            for (int i = 0; i < mNavigationDrawerItemTitles.length; i++) {
-                mDrawerList.setItemChecked(i, false);
-            }
             fragment_flag = false;
         } else {
             super.onBackPressed();
